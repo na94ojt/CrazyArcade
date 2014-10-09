@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+#include "MyGame.h"
 
 // CCrazyArcadeDlg 대화 상자
 class CCrazyArcadeDlg : public CDialogEx
@@ -31,4 +31,8 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+private:
+	MyGame m_Game;
+public:
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 };

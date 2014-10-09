@@ -62,6 +62,7 @@ BEGIN_MESSAGE_MAP(CCrazyArcadeDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
 
@@ -139,6 +140,10 @@ void CCrazyArcadeDlg::OnPaint()
 	}
 	else
 	{
+		CPaintDC dc(this);
+
+		this->m_Game.DrawGame(this->m_hWnd, dc);
+		
 		CDialogEx::OnPaint();
 	}
 }
@@ -157,4 +162,24 @@ BOOL CCrazyArcadeDlg::PreTranslateMessage(MSG* pMsg)
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 
 	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+int CCrazyArcadeDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CDialogEx::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	// TODO:  여기에 특수화된 작성 코드를 추가합니다.
+
+	//전체화면
+	LONG style = ::GetWindowLong(this->m_hWnd, GWL_STYLE);
+	::ShowWindow(this->m_hWnd, SW_MAXIMIZE);
+	style = ::GetWindowLong(this->m_hWnd, GWL_STYLE);
+	style &= ~(WS_DLGFRAME | WS_THICKFRAME);
+	::SetWindowLong(this->m_hWnd, GWL_STYLE, style);
+
+	this->m_Game.LoadBit(AfxGetInstanceHandle());
+	
+	return 0;
 }
