@@ -1,27 +1,9 @@
-﻿빌드 시작: 2014-11-18 오후 7:07:56
-     1>2 노드의 "C:\Users\준택\Desktop\CrazyArcade\CrazyArcade\CrazyArcade.vcxproj" 프로젝트(Build 대상)입니다.
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\CrazyArcade.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
-         stdafx.cpp
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\CrazyArcade.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CrazyArcade.cpp CrazyArcadeDlg.cpp MyGame.cpp
-         MyGame.cpp
-     1>c:\users\준택\desktop\crazyarcade\crazyarcade\mygame.cpp(10): warning C4101: 'startx' :참조되지 않은 지역 변수입니다.
-     1>c:\users\준택\desktop\crazyarcade\crazyarcade\mygame.cpp(11): warning C4101: 'starty' :참조되지 않은 지역 변수입니다.
-     1>c:\users\준택\desktop\crazyarcade\crazyarcade\mygame.cpp(54): warning C4101: 'rect' :참조되지 않은 지역 변수입니다.
-         CrazyArcadeDlg.cpp
-         CrazyArcade.cpp
-         코드를 생성하고 있습니다...
-       ResourceCompile:
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /l"0x0412" /IDebug\ /nologo /fo"Debug\CrazyArcade.res" CrazyArcade.rc 
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\준택\Desktop\CrazyArcade\Debug\CrazyArcade.exe" /INCREMENTAL /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"C:\Users\준택\Desktop\CrazyArcade\Debug\CrazyArcade.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\준택\Desktop\CrazyArcade\Debug\CrazyArcade.lib" /MACHINE:X86 Debug\CrazyArcade.res
-         Debug\CrazyArcade.obj
-         Debug\CrazyArcadeDlg.obj
-         Debug\MyGame.obj
-         Debug\stdafx.obj
-         CrazyArcade.vcxproj -> C:\Users\준택\Desktop\CrazyArcade\Debug\CrazyArcade.exe
-     1>"C:\Users\준택\Desktop\CrazyArcade\CrazyArcade\CrazyArcade.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+﻿빌드 시작: 2014-11-18 오후 7:30:21
+     1>2 노드의 "D:\Programming\CrazyArcade\CrazyArcade\CrazyArcade\CrazyArcade.vcxproj" 프로젝트(Build 대상)입니다.
+     1>Link:
+         CrazyArcade.vcxproj -> D:\Programming\CrazyArcade\CrazyArcade\Debug\CrazyArcade.exe
+     1>"D:\Programming\CrazyArcade\CrazyArcade\CrazyArcade\CrazyArcade.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
 
 빌드했습니다.
 
-경과 시간: 00:00:04.67
+경과 시간: 00:00:00.38
