@@ -32,7 +32,7 @@ protected:
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 private:
-	MyGame m_Game;
+	MyGame* m_Game;
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 };
