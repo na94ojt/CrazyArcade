@@ -23,7 +23,6 @@
 #include <afxdisp.h>        // MFC 자동화 클래스입니다.
 
 
-
 #ifndef _AFX_NO_OLE_SUPPORT
 #include <afxdtctl.h>           // Internet Explorer 4 공용 컨트롤에 대한 MFC 지원입니다.
 #endif
@@ -52,3 +51,8 @@
 #endif
 
 
+typedef struct _MYPOSITION
+{
+	int x;
+	int y;
+}MYPOSITION;

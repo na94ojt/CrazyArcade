@@ -1,29 +1,30 @@
 #include "stdafx.h"
-#include "MyGame.h"
 #include "Resource.h"
-
+#include "MyGame.h"
 
 MyGame::MyGame(HWND hWnd, HINSTANCE hInst)
-: m_startX_interface(0), m_startY_interface(0), m_startX_Game(0), m_startY_Game(0), m_width_interface(0), m_height_interface(0), m_width_Game(0), m_height_Game(0)
 {
-	RECT rect;
-	int startx;
-	int starty;
+	RECT rect;																						//윈도우즈의 크기를 저장할 RECT 객체
 
-	GetClientRect(hWnd, &rect);	
+	GetClientRect(hWnd, &rect);																		//윈도우즈의 크기를 가져와 rect에 저장
 
-	this->m_height_interface = rect.bottom;
-	this->m_width_interface = rect.bottom * 4 / 3;
+	//인터페이스 크기 초기화
+	this->m_size_interface.y = rect.bottom;															
+	this->m_size_interface.x = rect.bottom * 4 / 3;
 
-	this->m_startX_interface = rect.right/2 - this->m_width_interface/2;
-	this->m_startY_interface = 0;
-	
-	this->m_startX_Game = this->m_startX_interface + (this->m_width_interface * 20 / 800);
-	this->m_startY_Game = this->m_startY_interface + (this->m_height_interface * 40 / 600);
+	//인터페이스 그리기 시작 지점 초기화
+	this->m_start_interface.x = rect.right/2 - this->m_size_interface.x/2;
+	this->m_start_interface.y = 0;
 
-	this->m_width_Game = this->m_width_interface * 3 / 4;
-	this->m_height_Game = this->m_height_interface * 13 / 15;
+	//게임화면 그리기 시작 지점 초기화
+	this->m_start_Game.x = this->m_start_interface.x + (this->m_size_interface.x * 20 / 800);
+	this->m_start_Game.y = this->m_start_interface.y + (this->m_size_interface.y * 40 / 600);
 
+	//게임화면 크기 초기화
+	this->m_size_Game.x = this->m_size_interface.x * 3 / 4;
+	this->m_size_Game.y = this->m_size_interface.y * 13 / 15;
+
+	//각종 비트맵 핸들 초기화
 	this->m_hBackgroundBit.LoadBitmapW(IDB_BACKGROUND);
 	this->m_hBackgroundFieldBit.LoadBitmapW(IDB_BACKGROUNDFIELD);
 	this->m_hHardBlockBit.LoadBitmapW(IDB_HARDBLOCK);
@@ -36,32 +37,49 @@ MyGame::~MyGame()
 
 void MyGame::DrawGame(HWND hWnd, HDC hdc)
 {
-	/*
-	HDC memDC = CreateCompatibleDC(hdc);							//핸들 생성
-
-	HBITMAP pOld = (HBITMAP)SelectObject(memDC, this->m_hBackgroundBit);				//원래 기존 상태 저장하고 memDC핸들에 bitmapObject 적용
-	TransparentBlt(hdc, rect.left, rect.top, rect.right, rect.bottom, memDC, 0, 0, 800, 600, RGB(255, 0, 255));				//그림그림
+	HDC memDC = CreateCompatibleDC(hdc);							//메모리 DC
+	HBITMAP pOld;													//이전에 들어 있던 object를 저장할 객체
 	
-	pOld = (HBITMAP)SelectObject(memDC, this->m_hBackgroundFieldBit);
-	TransparentBlt(hdc, startx, starty, endx, endy, memDC, 0, 0, 600, 520, RGB(255, 0, 255));
+	//인터페이스 그림
+	pOld = (HBITMAP)SelectObject(memDC, this->m_hBackgroundBit);
+	TransparentBlt(hdc, this->m_start_interface.x, this->m_start_interface.y, this->m_size_interface.x, this->m_size_interface.y, memDC, 0, 0, 800, 600, RGB(255,0,255));
 
-	pOld = (HBITMAP)SelectObject(memDC, this->m_hHardBlockBit);
-	TransparentBlt(hdc, startx, starty, startx + width, starty + height, memDC, 0, 0, 40, 40, RGB(255, 0, 255));
-	
-	SelectObject(memDC, pOld);										//원래의 Object로 다시 선택
-	DeleteDC(memDC);												//memDC 삭제
-	*/
-	RECT rect;
-	HDC memDC = CreateCompatibleDC(hdc);
-	HBITMAP pOld = (HBITMAP)SelectObject(memDC, this->m_hBackgroundBit);
+	//게임 화면 필드 그림
+	SelectObject(memDC, this->m_hBackgroundFieldBit);
+	TransparentBlt(hdc, this->m_start_Game.x, this->m_start_Game.y, this->m_size_Game.x, this->m_size_Game.y, memDC, 0, 0, 600, 520, RGB(255, 0, 255));
 
-	TransparentBlt(hdc, this->m_startX_interface, this->m_startY_interface, this->m_width_interface, this->m_height_interface, memDC, 0, 0, 800, 600, RGB(255,0,255));
 
-	pOld = (HBITMAP)SelectObject(memDC, this->m_hBackgroundFieldBit);
-	TransparentBlt(hdc, this->m_startX_Game, this->m_startY_Game, this->m_width_Game, this->m_height_Game, memDC, 0, 0, 600, 520, RGB(255, 0, 255));
-
+	//그리기 끝냄
 	SelectObject(memDC, pOld);
 	DeleteDC(memDC);
-	
-	
+}
+
+void MyGame::KeyDown(int key)
+{
+	this->m_keyboard.KeyDown(key);
+}
+
+void MyGame::KeyUp(int key)
+{
+	this->m_keyboard.KeyUp(key);
+}
+
+void MyGame::CheckKey()
+{
+	if (0 != this->m_keyboard.FindKey(VK_LEFT))
+	{
+		
+	}
+	if (0 != this->m_keyboard.FindKey(VK_RIGHT))
+	{
+
+	}
+	if (0 != this->m_keyboard.FindKey(VK_UP))
+	{
+
+	}
+	if (0 != this->m_keyboard.FindKey(VK_DOWN))
+	{
+
+	}
 }

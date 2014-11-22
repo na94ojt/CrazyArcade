@@ -63,6 +63,9 @@ BEGIN_MESSAGE_MAP(CCrazyArcadeDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_WM_CREATE()
+//	ON_WM_KEYDOWN()
+//	ON_WM_KEYUP()
+ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -99,6 +102,7 @@ BOOL CCrazyArcadeDlg::OnInitDialog()
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 	this->m_Game = new MyGame(this->m_hWnd, AfxGetInstanceHandle());
+	SetTimer(1, 10, NULL);
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -161,7 +165,14 @@ HCURSOR CCrazyArcadeDlg::OnQueryDragIcon()
 BOOL CCrazyArcadeDlg::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
-
+	if (WM_KEYDOWN == pMsg->message)
+	{
+		this->m_Game->KeyDown(pMsg->wParam);
+	}
+	else if (WM_KEYUP == pMsg->message)
+	{
+		this->m_Game->KeyUp(pMsg->wParam);
+	}
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
 
@@ -181,4 +192,14 @@ int CCrazyArcadeDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	::SetWindowLong(this->m_hWnd, GWL_STYLE, style);
 	
 	return 0;
+}
+
+void CCrazyArcadeDlg::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	if (1 == nIDEvent)
+	{
+		this->m_Game->CheckKey();
+	}
+	CDialogEx::OnTimer(nIDEvent);
 }
