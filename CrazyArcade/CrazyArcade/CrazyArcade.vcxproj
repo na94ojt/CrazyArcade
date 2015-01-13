@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6420A064-2122-4419-A173-57C059215FF0}</ProjectGuid>
+    <ProjectGuid>{551F2EDD-AB74-4136-8DA1-0679F8BEA8C3}</ProjectGuid>
     <RootNamespace>CrazyArcade</RootNamespace>
     <Keyword>MFCProj</Keyword>
   </PropertyGroup>
@@ -101,19 +101,34 @@
   <ItemGroup>
     <ClInclude Include="CrazyArcade.h" />
     <ClInclude Include="CrazyArcadeDlg.h" />
-    <ClInclude Include="MyCharacter.h" />
-    <ClInclude Include="MyGame.h" />
-    <ClInclude Include="MyKeyboard.h" />
+    <ClInclude Include="GameHandler.h" />
+    <ClInclude Include="ItemBlock.h" />
+    <ClInclude Include="KDBuffer.h" />
+    <ClInclude Include="KDC.h" />
+    <ClInclude Include="KKeyboard.h" />
+    <ClInclude Include="KMedia.h" />
+    <ClInclude Include="MyBlock.h" />
+    <ClInclude Include="MyGameGlobal.h" />
+    <ClInclude Include="MyMap.h" />
+    <ClInclude Include="MyObject.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SolidBlock.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
     <ClCompile Include="CrazyArcadeDlg.cpp" />
-    <ClCompile Include="MyCharacter.cpp" />
-    <ClCompile Include="MyGame.cpp" />
-    <ClCompile Include="MyKeyboard.cpp" />
+    <ClCompile Include="GameHandler.cpp" />
+    <ClCompile Include="ItemBlock.cpp" />
+    <ClCompile Include="KDBuffer.cpp" />
+    <ClCompile Include="KDC.cpp" />
+    <ClCompile Include="KKeyboard.cpp" />
+    <ClCompile Include="KMedia.cpp" />
+    <ClCompile Include="MyBlock.cpp" />
+    <ClCompile Include="MyMap.cpp" />
+    <ClCompile Include="MyObject.cpp" />
+    <ClCompile Include="SolidBlock.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -127,16 +142,13 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\bitmap2.bmp" />
     <Image Include="res\bmp00001.bmp" />
     <Image Include="res\bmp00002.bmp" />
+    <Image Include="res\bmp00003.bmp" />
     <Image Include="res\CrazyArcade.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties RESOURCE_FILE="CrazyArcade.rc" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>

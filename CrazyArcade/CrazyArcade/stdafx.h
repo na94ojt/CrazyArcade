@@ -20,7 +20,7 @@
 #include <afxext.h>         // MFC 확장입니다.
 
 
-#include <afxdisp.h>        // MFC 자동화 클래스입니다.
+
 
 
 #ifndef _AFX_NO_OLE_SUPPORT
@@ -51,8 +51,3 @@
 #endif
 
 
-typedef struct _MYPOSITION
-{
-	int x;
-	int y;
-}MYPOSITION;

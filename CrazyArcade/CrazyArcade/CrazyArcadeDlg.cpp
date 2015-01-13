@@ -6,46 +6,16 @@
 #include "CrazyArcade.h"
 #include "CrazyArcadeDlg.h"
 #include "afxdialogex.h"
+#include "MyGameGlobal.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
-// 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
-
-class CAboutDlg : public CDialogEx
-{
-public:
-	CAboutDlg();
-
-// 대화 상자 데이터입니다.
-	enum { IDD = IDD_ABOUTBOX };
-
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
-
-// 구현입니다.
-protected:
-	DECLARE_MESSAGE_MAP()
-};
-
-CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
-{
-}
-
-void CAboutDlg::DoDataExchange(CDataExchange* pDX)
-{
-	CDialogEx::DoDataExchange(pDX);
-}
-
-BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
-END_MESSAGE_MAP()
-
-
 // CCrazyArcadeDlg 대화 상자
 
-
+HINSTANCE hInst;
 
 CCrazyArcadeDlg::CCrazyArcadeDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CCrazyArcadeDlg::IDD, pParent)
@@ -59,13 +29,9 @@ void CCrazyArcadeDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CCrazyArcadeDlg, CDialogEx)
-	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_WM_CREATE()
-//	ON_WM_KEYDOWN()
-//	ON_WM_KEYUP()
-ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -75,49 +41,22 @@ BOOL CCrazyArcadeDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	// 시스템 메뉴에 "정보..." 메뉴 항목을 추가합니다.
-
-	// IDM_ABOUTBOX는 시스템 명령 범위에 있어야 합니다.
-	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
-	ASSERT(IDM_ABOUTBOX < 0xF000);
-
-	CMenu* pSysMenu = GetSystemMenu(FALSE);
-	if (pSysMenu != NULL)
-	{
-		BOOL bNameValid;
-		CString strAboutMenu;
-		bNameValid = strAboutMenu.LoadString(IDS_ABOUTBOX);
-		ASSERT(bNameValid);
-		if (!strAboutMenu.IsEmpty())
-		{
-			pSysMenu->AppendMenu(MF_SEPARATOR);
-			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
-		}
-	}
-
 	// 이 대화 상자의 아이콘을 설정합니다.  응용 프로그램의 주 창이 대화 상자가 아닐 경우에는
 	//  프레임워크가 이 작업을 자동으로 수행합니다.
 	SetIcon(m_hIcon, TRUE);			// 큰 아이콘을 설정합니다.
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-	this->m_Game = new MyGame(this->m_hWnd, AfxGetInstanceHandle());
-	SetTimer(1, 10, NULL);
+	RECT rect;
+
+	GetClientRect(&rect);
+
+	hInst = AfxGetInstanceHandle();
+
+	this->m_game.InitGame(::GetDC(this->m_hWnd), hInst, rect);		//게임 화면 등 여러가지 초기화
+	srand(time(NULL));
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
-}
-
-void CCrazyArcadeDlg::OnSysCommand(UINT nID, LPARAM lParam)
-{
-	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
-	{
-		CAboutDlg dlgAbout;
-		dlgAbout.DoModal();
-	}
-	else
-	{
-		CDialogEx::OnSysCommand(nID, lParam);
-	}
 }
 
 // 대화 상자에 최소화 단추를 추가할 경우 아이콘을 그리려면
@@ -145,10 +84,7 @@ void CCrazyArcadeDlg::OnPaint()
 	}
 	else
 	{
-		CPaintDC dc(this);
-
-		this->m_Game->DrawGame(this->m_hWnd, dc);
-		
+		this->m_game.Paint();		//게임 그림
 		CDialogEx::OnPaint();
 	}
 }
@@ -162,44 +98,17 @@ HCURSOR CCrazyArcadeDlg::OnQueryDragIcon()
 
 
 
-BOOL CCrazyArcadeDlg::PreTranslateMessage(MSG* pMsg)
-{
-	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
-	if (WM_KEYDOWN == pMsg->message)
-	{
-		this->m_Game->KeyDown(pMsg->wParam);
-	}
-	else if (WM_KEYUP == pMsg->message)
-	{
-		this->m_Game->KeyUp(pMsg->wParam);
-	}
-	return CDialogEx::PreTranslateMessage(pMsg);
-}
-
-
 int CCrazyArcadeDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CDialogEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
 	// TODO:  여기에 특수화된 작성 코드를 추가합니다.
-
-	//전체화면
 	LONG style = ::GetWindowLong(this->m_hWnd, GWL_STYLE);
 	::ShowWindow(this->m_hWnd, SW_MAXIMIZE);
 	style = ::GetWindowLong(this->m_hWnd, GWL_STYLE);
 	style &= ~(WS_DLGFRAME | WS_THICKFRAME);
 	::SetWindowLong(this->m_hWnd, GWL_STYLE, style);
-	
-	return 0;
-}
 
-void CCrazyArcadeDlg::OnTimer(UINT_PTR nIDEvent)
-{
-	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	if (1 == nIDEvent)
-	{
-		this->m_Game->CheckKey();
-	}
-	CDialogEx::OnTimer(nIDEvent);
+	return 0;
 }
